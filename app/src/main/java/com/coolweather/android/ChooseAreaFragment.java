@@ -99,7 +99,7 @@ public class ChooseAreaFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position,
+            public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 if (currentLevel == LEVEL_PROVINCE) {
                     selectedProvince = provinceList.get(position);
@@ -197,7 +197,7 @@ public class ChooseAreaFragment extends Fragment {
      *根据传入的地址和类型从服务器上查询省市县数据
      */
     private void queryFromSever(String address, final String type) {
-        //showProgressDialog();
+        showProgressBar();
         HttpUtil.sendOkHttpRequest(address, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -214,7 +214,7 @@ public class ChooseAreaFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //closeProgressDialog();
+                            closeProgressBar();
                             if ("province".equals(type)) {
                                 queryProvinces();
                             } else if ("city".equals(type)) {
@@ -233,7 +233,7 @@ public class ChooseAreaFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //closeProgressDialog();
+                        closeProgressBar();
                         Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -241,25 +241,24 @@ public class ChooseAreaFragment extends Fragment {
         });
     }
 
-/**
- * 显示进度对话框
- */
-//    private void showProgressDialog() {
-//        if (progressDialog == null) {
-//            progressDialog = new ProgressDialog(getActivity());
-//            progressDialog.setMessage("正在加载...");
-//            progressDialog.setCanceledOnTouchOutside(false);
-//        }
-//        progressDialog.show();
-//    }
+    /**
+     * 显示进度对话框
+     */
+    private void showProgressBar(){
+        if (progressBar == null) {
+            progressBar = new ProgressBar(getActivity());
+        }
+        progressBar.setVisibility(View.VISIBLE);
+    }
 
     /**
      * 关闭进度对话框
      */
-//    private void closeProgressDialog() {
-//        if (progressDialog != null) {
-//            progressDialog.dismiss();
-//        }
-//   }
+    private void closeProgressBar(){
+        if (progressBar == null) {
+            progressBar = new ProgressBar(getActivity());
+        }
+        progressBar.setVisibility(View.GONE);
+    }
 }
 
