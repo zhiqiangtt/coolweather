@@ -22,7 +22,7 @@ public class Province extends LitePalSupport {
         return provinceName;
     }
 
-    public void setProvinceName() {
+    public void setProvinceName(String name) {
         this.provinceName = provinceName;
     }
 
@@ -30,7 +30,7 @@ public class Province extends LitePalSupport {
         return provinceCode;
     }
 
-    public void setProvinceCode() {
+    public void setProvinceCode(int id) {
         this.provinceCode = provinceCode;
     }
 
